@@ -1,0 +1,15 @@
+/__main__.build
+/__main__.dist
+/__main__.onefile-build
+/.vscode
+/cli.build
+/cli.dist
+/cli.onefile-build
+/hova_venv
+/HOVA_INFO.txt
+/pipeline_hova.txt
+/syntax_view.hova
+/cli/hova.egg-info
+/src/ToINI.py
+/src/ToMarkdown.py
+hova.exe
