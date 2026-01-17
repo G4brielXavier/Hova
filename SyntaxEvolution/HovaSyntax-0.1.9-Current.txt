@@ -1,0 +1,27 @@
+anvil Test
+
+    atomic
+        atom creator : "Gabriel Xavier"
+        atom emit : "json"
+        atom desc : "This is..."
+
+        atom visual : "minimal"
+    end
+
+    cave Men
+
+        ore Lucas
+            spark age : 25
+        end
+
+    end
+
+    cave Women
+
+        ore Clara
+            spar age : 24
+        end
+
+    end
+
+end

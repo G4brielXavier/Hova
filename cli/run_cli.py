@@ -2,11 +2,20 @@ import argparse
 import sys
 import os
 
-from src.Runtime import Forge
+from src.hova.Runtime import Forge
+
+from src.hova.ErrorsTreatments import (
+    HovaContextError,
+    HovaEmissionError,
+    HovaReferenceError,
+    HovaSyntaxError,
+    HovaTypeError
+)
 
 def main():
     parser = argparse.ArgumentParser(
         prog="hova",
+        version="0.0.2",
         description="Hova CLI — execute, convert and manage Hova files.",
         epilog="Example:\n hova forge world.hova\n hova forge settings.hova -o ./out",    
         formatter_class=argparse.RawTextHelpFormatter
@@ -16,7 +25,7 @@ def main():
     parser.add_argument(
         "--version",
         action="version",
-        version=f'Hova v0.1.8'
+        version=f'Hova v0.1.9'
     )
     
     subparsers = parser.add_subparsers(dest="command")
@@ -79,19 +88,29 @@ def handle_forge(args):
     try:
         code = open(file, "r", enconding="utf-8").read()    
     except Exception as err:
-        print(f'[Hova CLI Error] Could not read file:\n{err}')
+        print(f'[Hova CLI Alert] Could not read file:\n{err}')
         sys.exit(1)
-        
-    if not args.silent:
-        print(f'⚒️  Forging: {file}')
         
     try:
-        Forge(code, output_dir=args.output, force_emit=args.emit)
-    except Exception as err:
-        print("\n Forge Failed!")
-        print(err)
+        Forge(
+            code, 
+            output_dir=args.output, 
+            force_emit=args.emit,
+            silent=args.silent
+        )
+    except HovaTypeError as err:
+        ...
         sys.exit(1)
-    
-    if not args.silent:
-        print("Done!")
+    except HovaContextError as err:
+        ...
+        sys.exit(1)
+    except HovaEmissionError as err:
+        ...
+        sys.exit(1)
+    except HovaReferenceError as err:
+        ...
+        sys.exit(1)
+    except HovaSyntaxError as err:
+        ...
+        sys.exit(1)
         

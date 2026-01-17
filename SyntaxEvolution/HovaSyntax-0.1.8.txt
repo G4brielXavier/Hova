@@ -1,0 +1,24 @@
+temper Person (name, isalive) be
+    det Name : !name
+    det isalive : !isalive
+end
+
+charm be
+    rune IsAlive <bool> : true
+end
+
+anvil Test be
+
+    atomic be
+        atom creator : "GabrielXavier"
+        atom emit : "json"
+        atom description : "This is..."
+    end
+
+    ore PersonOne : Person("GabrielXavier", $IsAlive)
+
+    ore PersonTwo be    
+        anno @Mark('Humans')
+    end
+    
+end

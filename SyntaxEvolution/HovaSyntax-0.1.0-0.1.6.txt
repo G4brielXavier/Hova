@@ -1,0 +1,12 @@
+charm be
+    rune IsAlive <bool> : true
+end
+
+anvil Test by GabrielXavier be
+
+    ore Person be
+        spark Name <str> : "Gabriel"
+        spark Alive <bool> : UseRune(IsAlive)
+    end @Mark('Human')
+
+end like json to TestFolder

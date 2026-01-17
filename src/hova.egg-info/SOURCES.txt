@@ -1,0 +1,15 @@
+pyproject.toml
+hova/Emitter.py
+hova/ErrorsTreatments.py
+hova/Interpreter.py
+hova/Parser.py
+hova/Runtime.py
+hova/ToINI.py
+hova/ToMarkdown.py
+hova/TokenConversions.py
+hova/Tokenizer.py
+hova/__init__.py
+hova.egg-info/PKG-INFO
+hova.egg-info/SOURCES.txt
+hova.egg-info/dependency_links.txt
+hova.egg-info/top_level.txt

@@ -1,0 +1,25 @@
+charm be
+    rune IsAlive <bool> : true
+end
+
+mold Person be
+    spark Name <str>
+    spark IsAlive <bool>
+end
+
+anvil Test be
+
+    atomic be
+        atom creator : "GabrielXavier"
+    end
+
+    ore Person be
+        @Mark("Person")
+
+        UseMold(Person) be
+            put "GabrielXavier"
+            put UseRune(IsAlive)
+        end
+    end
+
+end like json

@@ -10,6 +10,14 @@
 /pipeline_hova.txt
 /syntax_view.hova
 /cli/hova.egg-info
-/src/ToINI.py
-/src/ToMarkdown.py
+
+/src/hova/ToINI.py
+/src/hova/ToMarkdown.py
+Training.hova
+
 hova.exe
+/src/dist
+
+
+/src/pyproject.toml
+/src/hova/hova.egg-info
