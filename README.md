@@ -191,29 +191,30 @@ Problems:
 ### ✅ Hova (human-first, structured)
 
 ```hova
-anvil Enemies be
+anvil Enemies
 
-    atomic be
+    atomic
         atom emit : "json"
+        atom visual : "minimal"
     end
 
-    ore Slime be
+    ore Slime
         spark Damage int : 15
         spark MaxLife int : 50
 
-        spark Drop block : be
-            Gold int : 25
-            Change float : 0.3
+        ore Drop
+            spark Gold int : 25
+            spark Change float : 0.3
         end
     end
 
-    ore KnightGuard be
-        spark Damage int : 23
-        spark MaxLife int : 200
+    ore KnightGuard
+        spark Damage : 23
+        spark MaxLife : 200
 
-        ore Drop be
-            spark Gold int : 25
-            spark Chance float : 0.3
+        ore Drop
+            spark Gold : 25
+            spark Chance : 0.3
         end
     end
 
@@ -236,9 +237,7 @@ Benefits:
 | `atomic` | metadata + output behavior |
 | `ore`    | entity / object            |
 | `spark`  | property                   |
-| `temper` | contract / schema          |
-| `seal`   | behavior descriptor        |
-| `rune`   | reusable definition        |
+
 
 Hova models structure.
 Your engine executes meaning.
@@ -267,9 +266,8 @@ See full roadmap: [Hova Roadmap](./Hova%20–%20Roadmap%20Oficial.md)
 
 Download → run → done.
 
----
 
-### ✔ pip
+<!-- ### ✔ pip
 
 ```
 pip install hova
@@ -279,7 +277,7 @@ Test:
 
 ```
 hova --version
-```
+``` -->
 
 ---
 
@@ -297,17 +295,17 @@ Download installer from Releases.
 2️⃣ Write:
 
 ```hova
-anvil shapes be
-    atomic be
+anvil shapes
+    atomic
         atom emit : "json"
         atom creator : "dotxav"
     end
 
-    ore Square be
+    ore Square
         spark sides int : 4
     end
 
-    ore Triangle be
+    ore Triangle
         spark sides int : 3
     end
 end
@@ -322,7 +320,7 @@ hova forge shapes.hova
 Output appears in:
 
 ```
-outHova/Json
+hovabuild/json
 ```
 
 ---
@@ -332,7 +330,7 @@ outHova/Json
 Set output:
 
 ```hova
-atomic be
+atomic
     atom emit : "yaml"
 end
 ```

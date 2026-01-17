@@ -26,3 +26,4 @@ hova.exe
 /src/__pycache__
 /src/hova.egg-info
 
+/cli/__pycache__
