@@ -1,0 +1,16 @@
+anvil Shapes 
+
+    atomic 
+        atom visual : "minimal"
+        atom hideConfig : "on"
+    end
+
+    ore Square 
+        spark sides : 4
+    end
+
+    ore Triangle
+        spark sides : 3
+    end
+
+end

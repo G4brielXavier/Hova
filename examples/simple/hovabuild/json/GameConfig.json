@@ -1,0 +1,14 @@
+{
+    "GameConfig": {
+        "atomic": {
+            "config": {
+                "visual": "minimal"
+            },
+            "emit": "json"
+        },
+        "Difficulty": {
+            "mode": "Hard",
+            "enemyMultiplier": 1.5
+        }
+    }
+}

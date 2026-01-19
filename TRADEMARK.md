@@ -48,6 +48,3 @@ Contact us at the official repository.
 
 ---
 This policy may evolve with the project. Always refer to the latest version.
-
-
-Translated with DeepL.com (free version)

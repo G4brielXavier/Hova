@@ -2,7 +2,6 @@ from .ErrorsTreatments import (
     HovaSyntaxError,
     HovaTypeError,
     HovaContextError,
-    HovaReferenceError,
     HovaEmissionError,
     IsError
 )
@@ -31,7 +30,7 @@ def UpdateEmitterConfig(atomicConfig):
         
 
 def Emitter(node, canUpdate:bool=False):
-    
+
     if IsError(node): raise node
     
     if node['type'] == 'AnvilEncompass':
@@ -78,7 +77,7 @@ def Emitter(node, canUpdate:bool=False):
             case 'StringLiteral': return str(val)
             case 'IntegerLiteral': return int(val)
             case 'FloatingLiteral': return float(val)
-            case 'BooleanLiteral': return bool(val)
+            case 'BooleanLiteral': return val.lower() == "true"
             case 'ArrayLiteral':
                 items = []
                 for item in val:
@@ -149,10 +148,12 @@ def Emitter(node, canUpdate:bool=False):
         return Ores
     
     if node["type"] == "OreEncompass":
+
+        MessageImportant_Seal = []
         
         Seals = node["seals"]
-        OreSparks = node["sparks"]
-        MessageImportant_Seal = []
+        SparksList = node['sparks']
+        OresList = node["child_ores"]
 
         # SETUP ANNOTATIONS        
         if not Seals == []:
@@ -160,8 +161,10 @@ def Emitter(node, canUpdate:bool=False):
                 if seal["name"] == 'reject': MessageImportant_Seal.append({"message": 'IGNORE_IT', "args": []})
                 if seal["name"] == "mark": MessageImportant_Seal.append({"message": 'MARK_IT', "args": seal["args"]})
             
-        Sparks = {}
-        OreDict = {}
+        SparksDict = {}
+        OresDict = {}
+        
+        StructOreEncompass = {}
         
         # ADDING ANNOTATIONS EMITTED
         if not MessageImportant_Seal == []:
@@ -172,23 +175,31 @@ def Emitter(node, canUpdate:bool=False):
                     for mark in seal_msg['args']:
                         MarksToAdd.append(mark["value"])
                     
-                    OreDict["marks"] = MarksToAdd
+                    StructOreEncompass["marks"] = MarksToAdd
                     
                 if seal_msg["message"] == "IGNORE_IT":
-                    OreDict["ignored"] = seal_msg["args"]
+                    StructOreEncompass["ignored"] = seal_msg["args"]
         
         # ADDING SPARKS EMITTED
-        for child in OreSparks:
-            spark = Emitter(child)
-            Sparks[child["name"]] = spark
+        for spark in SparksList:
+            emitedSpark = Emitter(spark)
+            SparksDict[spark["name"]] = emitedSpark
+        
+        for ore in OresList:
+            emitedOre = Emitter(ore)
+            OresDict[ore['name']] = emitedOre
         
         if EmitterConfig['visual'] == 'minimal':
-            for name, value in Sparks.items():
-                OreDict[name] = value
+            for name, value in SparksDict.items():
+                StructOreEncompass[name] = value
+                
+            for name, value in OresDict.items():
+                StructOreEncompass[name] = value
         else:
-            OreDict["sparks"] = Sparks
+            StructOreEncompass["sparks"] = SparksDict
+            StructOreEncompass["embedOres"] = OresDict
     
-        return OreDict
+        return StructOreEncompass
     
     if node["type"] == "AtomicEncompass":
         
@@ -232,7 +243,7 @@ def Emitter(node, canUpdate:bool=False):
 
             return SparkFinalStruct
         
-        elif EmitterConfig['visual'] == "minimal" or EmitterConfig['visual'] == "basic":
+        elif EmitterConfig['visual'] == "minimal":
             SparkType = node['value']['type']
             SparkValue = ConvertTo(SparkType, node['value']['value'])
 
@@ -240,5 +251,24 @@ def Emitter(node, canUpdate:bool=False):
     
     if node['type'] == 'EmbedOre':
         
-        EmbedItems = node['items']
-        return EmbedItems
+        EmbedOres = node['child_ores']
+        EmbedSparks = node['sparks']
+        
+        NewEmbedStruct = {}
+        
+        if not len(EmbedOres) > 0 and not len(EmbedSparks):
+            return [EmbedSparks, EmbedOres]
+        
+        for spark in EmbedSparks:
+            NewName = spark['name']
+            NewValue = Emitter(spark)
+                
+            NewEmbedStruct[NewName] = NewValue
+                
+        for ore in EmbedOres:
+            NewName = ore['name']
+            NewValue = Emitter(ore)
+            
+            NewEmbedStruct[NewName] = NewValue
+                
+        return NewEmbedStruct

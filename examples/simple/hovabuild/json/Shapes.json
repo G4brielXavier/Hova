@@ -1,0 +1,13 @@
+{
+    "Shapes": {
+        "atomic": {
+            "emit": "json"
+        },
+        "Square": {
+            "sides": 4
+        },
+        "Triangle": {
+            "sides": 3
+        }
+    }
+}

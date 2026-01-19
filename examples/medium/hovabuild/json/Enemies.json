@@ -1,0 +1,26 @@
+{
+    "Enemies": {
+        "atomic": {
+            "config": {
+                "visual": "minimal"
+            },
+            "emit": "json"
+        },
+        "Slime": {
+            "hp": 50,
+            "damage": 8,
+            "Drop": {
+                "gold": 5,
+                "chance": 0.8
+            }
+        },
+        "Goblin": {
+            "hp": 120,
+            "damage": 18,
+            "Drop": {
+                "gold": 20,
+                "chance": 0.4
+            }
+        }
+    }
+}

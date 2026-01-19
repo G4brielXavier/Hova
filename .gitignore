@@ -13,13 +13,11 @@
 
 /src/hova/ToINI.py
 /src/hova/ToMarkdown.py
-Training.hova
-
 hova.exe
 /src/dist
 
+/cli/test_cli.py
 
-/src/pyproject.toml
 /src/hova/hova.egg-info
 
 /src/hova/__pycache__

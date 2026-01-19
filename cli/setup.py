@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="hova",
-    version="0.1.9",
+    version="1.95",
     packages=["hova"],
     entry_point={
         "console_scripts": [

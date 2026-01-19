@@ -11,14 +11,14 @@ from .ErrorsTreatments import (
     HovaSyntaxError,
     HovaTypeError,
     HovaContextError,
-    HovaReferenceError,
     HovaEmissionError
 )
  
 
 def FunctionInterpreter(node):
     NewNode = []
- 
+    
+       
     if node["type"] == "AnvilEncompass":
         oresInterpreted = []
         
@@ -44,39 +44,32 @@ def FunctionInterpreter(node):
              
     if node["type"] == "OreEncompass":
 
-        NewSparks = []
-
-        # print(node)
-
-        for spark in node["sparks"]:
+        NewOres = []
+        NewSparks = []  
+        
+        if len(node['sparks']) > 0:
+            for spark in node['sparks']:
+                if spark['value']['type'] in ('StringLiteral', 'IntegerLiteral', 'FloatingLiteral', 'BooleanLiteral', 'ArrayLiteral'):
+                    NewSparks.append(spark)
             
-            if spark['type'] == 'OreEncompass':
-                OreName = spark['name']
-                OreItems = spark['sparks']
+        if len(node['child_ores']) > 0:
+            for oreChild in node['child_ores']:
+                oreName = oreChild['name']
+                oreSparks = oreChild['sparks']
+                oreEmbeds = oreChild['child_ores']
                 
                 NewEmbed = {
                     "type": "EmbedOre",
-                    "name": OreName,
-                    "items": {}
+                    "name": oreName,
+                    "child_ores": oreEmbeds,
+                    "sparks": oreSparks
                 }
-                
-                for ore in OreItems:
 
-                    ItemKey = ore['name']
-                    ItemValue = ore['value']['value']
-                    
-                    NewEmbed['items'].update({ItemKey : ItemValue})
-                    
-                NewSparks.append(NewEmbed)
-                
-            
-            if spark['type'] == 'Spark':
-                if spark["value"]["type"] in ("StringLiteral", "IntegerLiteral", "FloatingLiteral", "BooleanLiteral", "ArrayLiteral"):
-                    NewSparks.append(spark)    
+                NewOres.append(NewEmbed)                 
                 
         node["sparks"] = NewSparks
+        node['child_ores'] = NewOres
         return node
-
-                
+   
     
         

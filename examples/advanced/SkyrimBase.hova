@@ -1,0 +1,109 @@
+anvil FrostboundRealms
+
+    atomic
+        atom visual : "minimal"
+        atom hideConfig : "on"
+
+        atom emit : "json"
+        atom creator : "Gabriel Xavier"
+        atom description : "Adds a frozen region with new cities, NPCs, enemies and items."
+    end
+
+    ore Region
+
+        ore Frostvale
+            spark climate : "Frozen"
+            spark dangerLevel : "High"
+
+            ore City
+
+                ore Icewatch
+                    spark population : 8400
+                    spark faction : "NordicClans"
+
+                    ore NPCs
+
+                        ore HaldorIronbeard
+                            spark role : "Blacksmith"
+                            spark essential : true
+
+                            ore Inventory
+                                spark gold : 450
+                                spark rareItems : true
+                            end
+                        end
+
+                        ore LyraSnowseer
+                            spark role : "Mage"
+                            spark essential : false
+                        end
+
+                    end
+
+                    ore Enemies
+
+                        ore IceWolf
+                            spark level : 6
+                            spark health : 120
+                            spark damage : 18
+
+                            ore Drop
+                                spark item : "IceFang"
+                                spark chance : 0.4
+                            end
+                        end
+
+                        ore FrostTroll
+                            spark level : 18
+                            spark health : 600
+                            spark damage : 55
+
+                            ore Drop
+                                spark item : "TrollHeart"
+                                spark chance : 0.25
+                            end
+                        end
+
+                    end
+
+                    ore Items
+
+                        ore Weapon
+
+                            ore FrostAxe
+                                spark type : "Axe"
+                                spark damage : 42
+                                spark enchantment : "Freeze"
+                            end
+
+                        end
+
+                        ore Armor
+
+                            ore IceboundArmor
+                                spark defense : 85
+                                spark resistance : "Cold"
+                            end
+
+                        end
+
+                    end
+
+                    ore Factions
+
+                        ore NordicClans
+                            spark alignment : "Neutral"
+                            spark reputationRequired : 10
+                        end
+
+                    end
+
+                end
+
+            end
+
+        end
+
+    end
+
+end

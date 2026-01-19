@@ -1,0 +1,76 @@
+{
+    "FrostboundRealms": {
+        "atomic": {
+            "emit": "json",
+            "creator": "Gabriel Xavier",
+            "description": "Adds a frozen region with new cities, NPCs, enemies and items."
+        },
+        "Region": {
+            "Frostvale": {
+                "climate": "Frozen",
+                "dangerLevel": "High",
+                "City": {
+                    "Icewatch": {
+                        "population": 8400,
+                        "faction": "NordicClans",
+                        "NPCs": {
+                            "HaldorIronbeard": {
+                                "role": "Blacksmith",
+                                "essential": true,
+                                "Inventory": {
+                                    "gold": 450,
+                                    "rareItems": true
+                                }
+                            },
+                            "LyraSnowseer": {
+                                "role": "Mage",
+                                "essential": false
+                            }
+                        },
+                        "Enemies": {
+                            "IceWolf": {
+                                "level": 6,
+                                "health": 120,
+                                "damage": 18,
+                                "Drop": {
+                                    "item": "IceFang",
+                                    "chance": 0.4
+                                }
+                            },
+                            "FrostTroll": {
+                                "level": 18,
+                                "health": 600,
+                                "damage": 55,
+                                "Drop": {
+                                    "item": "TrollHeart",
+                                    "chance": 0.25
+                                }
+                            }
+                        },
+                        "Items": {
+                            "Weapon": {
+                                "FrostAxe": {
+                                    "type": "Axe",
+                                    "damage": 42,
+                                    "enchantment": "Freeze"
+                                }
+                            },
+                            "Armor": {
+                                "IceboundArmor": {
+                                    "defense": 85,
+                                    "resistance": "Cold"
+                                }
+                            }
+                        },
+                        "Factions": {
+                            "NordicClans": {
+                                "alignment": "Neutral",
+                                "reputationRequired": 10
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

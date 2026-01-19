@@ -79,6 +79,3 @@ By contributing, you agree:
 ---
 
 Thank you for strengthening the project 🙏
-
-
-Translated with DeepL.com (free version)

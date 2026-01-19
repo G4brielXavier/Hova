@@ -1,0 +1,27 @@
+anvil Enemies
+
+    atomic
+        atom visual : "minimal"
+    end
+
+    ore Slime
+        spark hp : 50
+        spark damage : 8
+
+        ore Drop
+            spark gold : 5
+            spark chance : 0.8
+        end
+    end
+
+    ore Goblin
+        spark hp : 120
+        spark damage : 18
+
+        ore Drop
+            spark gold : 20
+            spark chance : 0.4
+        end
+    end
+
+end

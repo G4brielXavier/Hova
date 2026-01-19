@@ -1,4 +1,4 @@
-# Hova Commercial License
+### Hova Commercial License
 
 This license grants the right to use **Hova** in commercial, enterprise or monetized environments.
 

@@ -3,7 +3,6 @@ from .Tokenizer import Token
 from .ErrorsTreatments import (
     HovaSyntaxError,
     HovaTypeError,
-    HovaReferenceError,
     HovaContextError,
     
     IsError
@@ -91,8 +90,16 @@ def Parser(tokens):
     
     # GENERIC FUNCTIONS
     
-    def Parse_Block(until:str=None, encompassName:str=None, canEmpty:bool=False, insideOf:str=None, uniqueChild:bool=None, definerEncompass:str=None) -> list: 
-        nodes = []
+    def Parse_Block(until:str=None, encompassName:str=None, canEmpty:bool=False, insideOf:str=None, uniqueChild:bool=None, definerEncompass:list=None) -> list: 
+        nodes = None
+        
+        if encompassName == 'OreEncompass':
+            nodes = {
+                "sparks": [],
+                "ores": []
+            }
+        else:
+            nodes = []
          
         while True:
             next = ViewNext()
@@ -105,8 +112,7 @@ def Parser(tokens):
             
             if insideOf and context_stack[-1] != insideOf:
                 raise HovaContextError(f'This is must be insideOf {insideOf}, so is {context_stack[-1]}', next.ln, next.col)
-            
-            
+              
             before = pos
             node = Parse_Primary()
             
@@ -123,7 +129,6 @@ def Parser(tokens):
                     #     if it['name'] == node['name']:
                     #         return HovaError('202', f'Already exists a {definerEncompass} called "{node['name']}".', next.ln)
                         
-            
             if node is None:
                 raise HovaSyntaxError(f'Parser stalled in "{encompassName}". Token "{next.value}" not consumed.', next.ln, next.col)
             
@@ -131,11 +136,22 @@ def Parser(tokens):
                 raise HovaSyntaxError(f'Infinite loop detected in "{encompassName}". Token "{next.value}"', next.ln, next.col)
             
             if not node['type'] in ('StructLiteral', 'SymbolLiteral'):
-                nodes.append(node)
+                
+                if node['type'] == 'OreEncompass' or node['type'] == 'AtomicEncompass':
+                    if encompassName == 'OreEncompass':
+                        nodes['ores'].append(node)
+                    else:
+                        nodes.append(node)
+                elif node['type'] == 'Spark':
+                    if encompassName == 'OreEncompass':
+                        nodes['sparks'].append(node)
+                    else:
+                        nodes.append(node)
+                elif node['type'] == 'Atom':
+                    nodes.append(node)
         
         untilTok = Expect(until)
         if IsError(untilTok): raise HovaSyntaxError(f'Expected "end" to close "{encompassName}" keyword', tokens[pos-1].ln, tokens[pos-1].col)
-        
         
         return nodes
     
@@ -295,7 +311,7 @@ def Parser(tokens):
     def IsType(value:Token=None, typeList:list=None) -> bool:
         for t in typeList:
             if not t in TypesExtended:
-                raise HovaReferenceError(f'This {t} type not exist.', value.ln, value.col)
+                raise HovaTypeError(f'This {t} type not exist.', value.ln, value.col)
         
         for t in typeList:
             if value['type'] == t:
@@ -318,9 +334,6 @@ def Parser(tokens):
         tok = tokens[pos]
         
         context_stack.append('anvil')
-                
-        # anvil ManCharacters by me be
-        # end like json to Characters
         
         # ==========================================================
         # AnvilName
@@ -334,7 +347,8 @@ def Parser(tokens):
         children = Parse_Block(
             until='end', 
             encompassName="AnvilEncompass",
-            definerEncompass="OreEncompass",
+            definerEncompass=["OreEncompass", "AtomicEncompass", "CaveEncompass"],
+            canEmpty=True,
             uniqueChild=True
         )
         
@@ -354,12 +368,15 @@ def Parser(tokens):
                 
         # ==========================================================
         context_stack.pop()
-        return AnvilEncompass(AnvilName, AnvilAtomic, children)
+        return AnvilEncompass(
+            name=AnvilName,
+            atomic=AnvilAtomic,
+            children=children,
+            line=tok.ln,
+            col=tok.col
+        )
 
     def Parse_Atomic():
-        
-        # print(f'Current Stack: {context_stack}')
-        # print(f'Recent Stack: {context_stack[-1]}')
         
         if not context_stack or not context_stack[-1] == 'anvil':
             raise HovaContextError('You are declaring an AtomicEncompass outside an AnvilEncompass', tokens[pos-1].ln, tokens[pos-1].col)
@@ -380,17 +397,15 @@ def Parser(tokens):
         if not Next():
             raise HovaSyntaxError("Expected 'end' to close 'AtomicEncompass'", tok.ln, tok.col)
         
-        if ViewNext().value == 'end' and not Next().value == 'like':
-            endTok = Expect(value="end")
-            if IsError(endTok): raise endTok
-            
-            context_stack.pop()
-            return AtomicEncompass(atoms)
+        if context_stack[0] == 'anvil':
+            if Next() is None:
+                raise HovaSyntaxError("Expected 'end' to close 'AtomicEncompass'", tok.ln, tok.col)
         
-        atoms = Parse_Block(
+        atomsChildren = Parse_Block(
             until='end', 
             encompassName="AtomicEncompass", 
-            definerEncompass="AtomDefiner",    
+            definerEncompass=["AtomDefiner"],
+            canEmpty=True,
             uniqueChild=True
         )
             
@@ -404,7 +419,11 @@ def Parser(tokens):
             raise HovaSyntaxError("Expected 'end' to close 'AtomicEncompass'", tok.ln, tok.col)
 
         context_stack.pop()
-        return AtomicEncompass(atoms)
+        return AtomicEncompass(
+            atoms=atomsChildren,
+            line=tokens[pos].ln,
+            col=tokens[pos].col
+        )
     
     def Parse_Cave():
         
@@ -437,7 +456,12 @@ def Parser(tokens):
         # ===============================================
         
         context_stack.pop()
-        return CaveEncompass(CaveName, children, tok.ln, tok.col)
+        return CaveEncompass(
+            CaveName, 
+            children, 
+            tok.ln, 
+            tok.col
+        )
     
     def Parse_Ore():
     
@@ -474,7 +498,7 @@ def Parser(tokens):
         children = Parse_Block(
             until='end', 
             encompassName='OreEncompass', 
-            definerEncompass='SparkDefiner',
+            definerEncompass=['SparkDefiner', 'OreEncompass'],
             canEmpty=True, 
             uniqueChild=True
         )
@@ -482,25 +506,27 @@ def Parser(tokens):
         # Verify if its an error
         if IsError(children): raise children
         
-        # Return empty if has nothing inside Ore
-        if len(children) == 0:            
-            context_stack.pop()
-            return OreEncompass([], EntityName, children) 
-        
-        Sparks = []
-        Seals = []
+        # Sparks = []
+        # Seals = []
 
         # If its block, get seals and sparks separatelly 
             
-        for child in children:
+        # for child in children:
             
-            if child['type'] == 'Seal':
-                Seals.append(child)
-            else:
-                Sparks.append(child)
+        #     if child['type'] == 'Seal':
+        #         Seals.append(child)
+        #     else:
+        #         Sparks.append(child)
                     
         context_stack.pop()
-        return OreEncompass(Seals, EntityName, Sparks, tok.ln, tok.col)      
+        return OreEncompass(
+            seals=[],
+            name=EntityName, 
+            sparks=children['sparks'] if len(children['sparks']) > 0 else [],
+            child_ores=children['ores'] if len(children['ores']) > 0 else [],
+            line=tokens[pos].ln,
+            col=tokens[pos].col
+        )   
 
     # Parses for Definers
     
@@ -726,7 +752,7 @@ def Parser(tokens):
         if token.type == "IDENTIFIER":
             return Identifier(token.value)
         
-        raise HovaReferenceError(f'Token "{token.value}" not exist', token.ln, token.col)
+        raise HovaSyntaxError(f'Token "{token.value}" not exist', token.ln, token.col)
     
     
     

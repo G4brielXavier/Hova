@@ -1,3 +1,5 @@
+# TOKENIZER
+
 
 KEYWORDS = [
     "anvil", "ore", "atomic", "temper", "cave", # encompass 
@@ -19,9 +21,9 @@ class Token:
         
         
 def Tokenizer(Code):
-    Tokens = []
-    Current = ""
-    CurrentType = None
+    Tokens = [] # tokens 
+    Current = "" # Current token found
+    CurrentType = None # Current token type found
     
     i = 0
     ln = 1
@@ -30,6 +32,7 @@ def Tokenizer(Code):
     
     length = len(Code)
     
+    # This function verify when the Token is completed and if obey the conditions defined to be add on Tokens list
     def flush():
         nonlocal Current, CurrentType, Tokens
         
@@ -77,6 +80,7 @@ def Tokenizer(Code):
         Current = ""
         CurrentType = None
     
+    # This function has a while that iterate for each character of the 'input=Code' received
     def WhileTokens():
         nonlocal start_col, CurrentType, i, ln, col, Current
         

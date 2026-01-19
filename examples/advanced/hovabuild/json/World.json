@@ -1,0 +1,27 @@
+{
+    "World": {
+        "atomic": {
+            "creator": "Gabriel Xavier",
+            "description": "This is my World",
+            "created_at": "2026-01-16",
+            "version": "1.0",
+            "emit": "json"
+        },
+        "KingdomOfAren": {
+            "RegionNorth": {
+                "CityFrosthold": {
+                    "population": 12000,
+                    "NPC": {
+                        "name": "Eldric",
+                        "role": "Blacksmith"
+                    }
+                }
+            },
+            "RegionSouth": {
+                "CitySunreach": {
+                    "population": 34000
+                }
+            }
+        }
+    }
+}

@@ -2,12 +2,13 @@ import argparse
 import sys
 import os
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from src.hova.Runtime import Forge
 
 from src.hova.ErrorsTreatments import (
     HovaContextError,
     HovaEmissionError,
-    HovaReferenceError,
     HovaSyntaxError,
     HovaTypeError
 )
@@ -15,7 +16,6 @@ from src.hova.ErrorsTreatments import (
 def main():
     parser = argparse.ArgumentParser(
         prog="hova",
-        version="0.0.2",
         description="Hova CLI — execute, convert and manage Hova files.",
         epilog="Example:\n hova forge world.hova\n hova forge settings.hova -o ./out",    
         formatter_class=argparse.RawTextHelpFormatter
@@ -25,7 +25,7 @@ def main():
     parser.add_argument(
         "--version",
         action="version",
-        version=f'Hova v0.1.9'
+        version=f'Hova v1.95'
     )
     
     subparsers = parser.add_subparsers(dest="command")
@@ -49,18 +49,12 @@ def main():
     )
     
     forge.add_argument(
-        "--emit",
+        "-e", "--emit",
         help="Override emit type (json / yaml / toml)",
         choices=["json", "yaml", "toml"],
         default=None
     )
-    
-    forge.add_argument(
-        "--silent",
-        action="store_true",
-        help="Suppress logs and just process"
-    )
-    
+
     args = parser.parse_args()
     
     if not args.command:
@@ -71,46 +65,45 @@ def main():
 
 def handle(args):
     
-    if args.command == "forge": handle_forge(args)
+    if args.command == "forge": 
+        handle_forge(args)
+        return 
     
-    print('Unknown command')
+    print('[Hova CLI Alert] Unknown Command')
     sys.exit(1)
         
-        
-
 def handle_forge(args):
     file = args.file
     
     if not os.path.exists(file):
-        print(f'[Hova CLI] File not found: {file}')
+        print(f'[Hova CLI Alert] File not found: {file}')
         sys.exit(1)
         
     try:
-        code = open(file, "r", enconding="utf-8").read()    
+        code = open(file, "r", encoding="utf-8").read()    
     except Exception as err:
         print(f'[Hova CLI Alert] Could not read file:\n{err}')
         sys.exit(1)
         
     try:
         Forge(
-            code, 
+            input=code, 
             output_dir=args.output, 
-            force_emit=args.emit,
-            silent=args.silent
+            force_emit=args.emit
         )
     except HovaTypeError as err:
-        ...
+        print(f'{err.message} - ln {err.line}, col {err.col}')
         sys.exit(1)
     except HovaContextError as err:
-        ...
+        print(f'{err.message} - ln {err.line}, col {err.col}')
         sys.exit(1)
     except HovaEmissionError as err:
-        ...
-        sys.exit(1)
-    except HovaReferenceError as err:
-        ...
+        print(f'{err.message} - ln {err.line}, col {err.col}')
         sys.exit(1)
     except HovaSyntaxError as err:
-        ...
+        print(f'{err.message} - ln {err.line}, col {err.col}')
         sys.exit(1)
         
+        
+if __name__ == '__main__':
+    main()

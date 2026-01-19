@@ -1,0 +1,22 @@
+anvil NPCs
+
+    atomic
+        atom visual : "minimal"
+    end
+
+    ore Merchant
+        spark role : "Trader"
+        spark location : "Capital"
+
+        ore Inventory
+            spark gold : 300
+            spark rareItems : true
+        end
+    end
+
+    ore Guard
+        spark role : "Defense"
+        spark location : "Gate"
+    end
+
+end

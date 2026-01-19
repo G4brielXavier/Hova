@@ -10,7 +10,7 @@
 
 ![HOVA](./assets/HOVA.png)
 
-Stop describing your game worlds in boring JSON or YAML.
+Stop describing **game worlds, entities and rules** using formats made for machines.
 
 **Hova is a human-friendly DSL made for world-building**, entity definition, modding ecosystems, NPC sets, configuration-heavy systems and narrative universes.
 Write structured worlds once → export instantly to **JSON, YAML or TOML**.
@@ -19,18 +19,17 @@ Write structured worlds once → export instantly to **JSON, YAML or TOML**.
 
 ## 🎮 What is Hova?
 
-Hova is a **Domain-Specific Language for creating universes**.
+Hova is a **Domain-Specific Language for describing worlds**.
 
-It was designed for:
+It is used to define:
+- games and engines
+- RPG & world-building projects
+- modding frameworks
+- structured narrative systems
+- projects with many entities and metadata
 
-* games and engines
-* RPG & world-building projects
-* modding frameworks
-* structured narrative systems
-* projects with many entities and metadata
-
-Instead of fighting complex JSON trees or repetitive YAML, you describe your world in a clean, expressive syntax.
-Then Hova converts it to machine formats.
+Hova files are written by humans. <br>
+They are compiled into **JSON, YAML or TOML** for machines.
 
 👉 More info & docs: [https://hova.space](https://hova.space)
 
@@ -86,7 +85,7 @@ JSON works great when:
 
 JSON breaks down when:
 - written by hand
-- maintained for months of years
+- maintained long-term
 - used to describe large worlds
 - edited by designers or writers
 
@@ -155,6 +154,24 @@ Humans deserve Hova.
 
 ---
 
+## Examples
+
+If you want to be what Hova really does.
+
+**Simple:** 
+- [Shapes.hova](./examples/simple/shapes.hova)
+- [gameConfig.hova](./examples/simple/gameConfig.hova)
+
+**Medium:** 
+- [Enemies.hova](./examples/medium/Enemies.hova)
+- [NPCs.hova](./examples/medium/NPCs.hova)
+
+**Advanced:** 
+- [Shapes.hova](./examples/advanced/World.hova)
+- [SkyrimBase.hova](./examples/advanced/SkyrimBase.hova)
+
+
+
 ## 🛠️ Defining Game Enemies
 
 ### ❌ JSON (machine-friendly, human-hostile)
@@ -204,7 +221,7 @@ anvil Enemies
 
         ore Drop
             spark Gold int : 25
-            spark Change float : 0.3
+            spark Chance float : 0.3
         end
     end
 
@@ -243,6 +260,8 @@ Hova models structure.
 Your engine executes meaning.
 
 ---
+
+
 
 ## 🗺️ Hova Roadmap
 
@@ -348,9 +367,11 @@ hovabuild/
 
 ## 📜 License
 
-Hova is dual-licensed.
+Hova is dual-licensed. <br>
 
-**Community License**
+If you are a company or plan to monetize a product using Hova, you **must use the Commercial License**.
+
+#### **Community License**
 Free for:
 
 * individuals
@@ -359,9 +380,8 @@ Free for:
 * research
 * non-profit
 
-**Commercial License**
+#### **Commercial License** 
 Required for:
-
 * companies
 * studios
 * SaaS
@@ -369,24 +389,12 @@ Required for:
 
 See:
 
+* LICENSE-AGPL
 * LICENSE-Community.md
 * LICENSE-Commercial.md
 
 Commercial contact:
-📧 [dotxavket@gmail.com](mailto:dotxavket@gmail.com)
-
----
-
-## ❤️ Support
-
-Hova is indie.
-
-If this helped your game, mod or universe, support development 🙌
-
-🇧🇷 Pix
-📧 [nopaxxff@gmail.com](mailto:nopaxxff@gmail.com)
-
-Foreigners can donate via Wise using this Pix.
+📧 [hovalicense@gmail.com](mailto:hovalicense@gmail.com)
 
 ---
 
@@ -414,3 +422,14 @@ It’s:
 * a **bridge between creativity and machines**
 * something game dev tools don’t have yet
 
+
+## ❤️ Support
+
+Hova is indie.
+
+If this helped your game, mod or universe, support development 🙌
+
+🇧🇷 Pix
+📧 [nopaxxff@gmail.com](mailto:nopaxxff@gmail.com)
+
+Foreigners can donate via Wise using this Pix.

@@ -1,0 +1,38 @@
+anvil World
+
+    atomic
+        atom hideConfig : "on"
+        atom visual : "minimal"
+
+        atom creator : "Gabriel Xavier"
+        atom description : "This is my World"
+        atom created_at : "2026-01-16"
+        atom version : "1.0"
+    end
+
+    ore KingdomOfAren
+
+        ore RegionNorth
+
+            ore CityFrosthold
+                spark population : 12000
+
+                ore NPC
+                    spark name : "Eldric"
+                    spark role : "Blacksmith"
+                end
+            end
+
+        end
+
+        ore RegionSouth
+
+            ore CitySunreach
+                spark population : 34000
+            end
+
+        end
+
+    end
+
+end

@@ -58,12 +58,13 @@ def AnvilEncompass(name, atomic, children, line:int=None, col:int=None) -> dict:
         "col": col
     }
 
-def OreEncompass(seals, name, sparks, line:int=None, col:int=None) -> dict:
+def OreEncompass(seals, name, sparks, child_ores, line:int=None, col:int=None) -> dict:
     return {
         "type": "OreEncompass",
         "name": name,
         "seals": seals,
         "sparks": sparks,
+        "child_ores": child_ores,
         "line": line,
         "col": col
     }

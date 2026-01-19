@@ -1,0 +1,12 @@
+anvil GameConfig 
+
+    atomic 
+        atom visual : "minimal"
+    end
+
+    ore Difficulty
+        spark mode : "Hard"
+        spark enemyMultiplier : 1.5
+    end
+
+end

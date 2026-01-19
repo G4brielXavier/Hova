@@ -1,0 +1,22 @@
+{
+    "NPCs": {
+        "atomic": {
+            "config": {
+                "visual": "minimal"
+            },
+            "emit": "json"
+        },
+        "Merchant": {
+            "role": "Trader",
+            "location": "Capital",
+            "Inventory": {
+                "gold": 300,
+                "rareItems": true
+            }
+        },
+        "Guard": {
+            "role": "Defense",
+            "location": "Gate"
+        }
+    }
+}
