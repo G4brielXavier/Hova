@@ -279,32 +279,11 @@ See full roadmap: [Hova Roadmap](./Hova%20–%20Roadmap%20Oficial.md)
 
 ## ⚙️ Installation
 
-### ✔ Website Installer
-
-[https://hova.space](https://hovaforge.xyz)
-
-Download → run → done.
-
-
-<!-- ### ✔ pip
-
-```
-pip install hova
-```
-
-Test:
-
-```
-hova --version
-``` -->
-
----
-
 ### ✔ Releases on Github
 
 Go to https://github.com/G4brielXavier/Hova
 
-Download installer from Releases.
+Download installer from **Releases**.
 
 ---
 
