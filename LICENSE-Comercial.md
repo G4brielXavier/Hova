@@ -16,7 +16,7 @@ Organizations MAY NOT:
 
 To acquire a commercial license, contact:
 
-📧 Email: dotxavket@gmail.com
+📧 Email: hovalicense@gmail.com
 
 > Copyright © Gabriel Xavier  
 All rights reserved.
