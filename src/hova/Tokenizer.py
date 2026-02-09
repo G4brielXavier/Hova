@@ -1,203 +1,153 @@
-# TOKENIZER
+from .TokenClass import Token
+from .ErrorsTreatments import HovaSyntaxError
+from .Utils import (
+    KEYWORDS,
+    TYPES,
+    SYMBOLS
+)
 
 
-KEYWORDS = [
-    "anvil", "ore", "atomic", "temper", "cave", # encompass 
-    "spark", "rune", "atom", # definers 
-    "end", # block
-    "seal", "reject", "mark", # seals
-    "true", "false", # booleans
-]
-
-SYMBOLS = set("&@!()[],.:")
-TYPES = ["int", "float", "str", "bool", "list"]
-
-class Token:
-    def __init__(self, type, value, ln, col):
-        self.type = type
-        self.value = value
-        self.ln = ln
-        self.col = col
+class Scanner:
+    def __init__(self, code):
+        self.code = code
+        self.index = 0
+        self.ln = 1
+        self.col = 0
         
         
-def Tokenizer(Code):
-    Tokens = [] # tokens 
-    Current = "" # Current token found
-    CurrentType = None # Current token type found
+    def peek(self):
+        return self.code[self.index] if self.index < len(self.code) else None
     
-    i = 0
-    ln = 1
-    col = 0
-    start_col = None
+    def next(self):
+        return self.code[self.index + 1] if self.index + 1 < len(self.code) else None
     
-    length = len(Code)
-    
-    # This function verify when the Token is completed and if obey the conditions defined to be add on Tokens list
-    def flush():
-        nonlocal Current, CurrentType, Tokens
+    def advance(self):
+        char = self.peek()
         
-        if not Current:
-            return
-        
-        if str(Current).lower() in KEYWORDS:
-            Tokens.append(
-                Token( 
-                    "KEYWORD", 
-                    str(Current).lower(),
-                    ln,
-                    col
-                )
-            )
-            
-        elif str(Current).lower() in TYPES:
-            Tokens.append(
-                Token(
-                    "TYPE",
-                    Current,
-                    ln,
-                    col
-                )
-            )
-        elif Current.replace("_", "").isalnum() or Current.isalnum():
-            Tokens.append(
-                Token( 
-                    "IDENTIFIER", 
-                    Current,
-                    ln,
-                    col
-                )
-            )
+        if char == '\n':
+            self.ln += 1
+            self.col = 0
         else:
-            Tokens.append(
-                Token(
-                    CurrentType, 
-                    Current,
-                    ln,
-                    col
-                )
-            )
+            self.col += 1
             
-        Current = ""
-        CurrentType = None
+        self.index += 1
+        return char
     
-    # This function has a while that iterate for each character of the 'input=Code' received
-    def WhileTokens():
-        nonlocal start_col, CurrentType, i, ln, col, Current
+    
+def Tokenizer(code):
+    scan = Scanner(code)
+    tokens = []
+    
+    def scan_identifier(scan):
+        start_ln, start_col = scan.ln, scan.col
+        value = ""
         
-        while i < length:
-
-            char = Code[i]
+        while scan.peek() and (scan.peek().isalnum() or scan.peek() == "_"):
+            value += scan.advance()
             
-            if char == '\n':
-                ln += 1
-                col = 0
-            
-            if char.isspace():
-                flush()
-                i += 1
-                continue
-
-            elif char == "." and i + 1 < length and Code[i + 1] == ".":
-                i += 2
-                while i < length and Code[i] != "\n":
-                    i += 1
-                continue
-            
-            elif char == "." and i + 1 < length and Code[i + 1] == "/":
-                i += 2
-                
-                while i < length and not (Code[i] == "/" and i + 1 < length and Code[i + 1] == "."):
-                    i += 1
-                i += 2
-                continue
-            
-            elif char in SYMBOLS:
-                flush()
-                Tokens.append(
-                    Token(
-                        "SYMBOL",
-                        char,
-                        ln,
-                        col
-                    )
-                )
-                
-                i += 1
-                continue
-            
-            elif char in ('"', "'"):
-                flush()
-                
-                quote = char
-                i += 1
-                Value = ""
-                
-                while i < length and Code[i] != quote:
-                    Value += Code[i]
-                    i += 1
-                    
-                i += 1
-                Tokens.append(
-                    Token(
-                        "STRING",
-                        Value,
-                        ln,
-                        col
-                    )
-                )
-                continue
-            
-            elif char.isdigit():
-                flush()
-                value = ""
-                has_dot = False
-                
-                while i < length and (Code[i].isdigit() or Code[i] == "."):
-                    if Code[i] == ".":
-                        if has_dot: 
-                            break
-                        
-                        if not (i + 1 < length and Code[i + 1].isdigit()):
-                            break
-                    
-                        has_dot = True
-                    
-                    value += Code[i]
-                    i += 1 
-                    
-                Tokens.append(
-                    Token(
-                        "NUMBER_FLOATING" if has_dot else "NUMBER_INTEGER",
-                        value,
-                        ln,
-                        col
-                    )
-                )
-                continue        
-                
-            elif char.isalpha() or char.isdigit() or char == "_":
-                
-                flush()
-                CurrentType = "IDENTIFIER"
-                start_col = col
-                Current += char
-                i += 1
-                
-                while i < length and (Code[i].isalnum() or Code[i] == "_"):
-                    Current += Code[i]
-                    i += 1
-                
-                flush()
-                Current = ""
-                continue
-                
-            # FALLBACK
-            i += 1
-            col += 1
+        token_type = (
+            "KEYWORD" if value.lower() in KEYWORDS
+            else "TYPE" if value.lower() in TYPES
+            else "IDENTIFIER"
+        )
+        
+        return Token(token_type, value, start_ln, start_col, scan.ln, scan.col)
     
-    WhileTokens()
-
-    return Tokens
-
+    
+    def scan_number(scan):
+        start_ln, start_col = scan.ln, scan.col
+        value = ""
+        has_dot = False
+        
+        while scan.peek() and (scan.peek().isdigit() or scan.peek() == '.'):
+            curr_char = scan.peek()
+            next_char = scan.next()
+        
+            if curr_char.isdigit():
+                value += curr_char
+                scan.advance()
+                continue
+                
+            if curr_char == '.' and next_char and next_char.isdigit() and not has_dot:
+                value += curr_char
+                scan.advance()
+                has_dot = True
+                continue
+            
+            break
+                
+        token_type = "NUMBER_FLOATING" if has_dot else "NUMBER_INTEGER"
+        return Token(token_type, value, start_ln, start_col, scan.ln, scan.col)
+        
+        
+    def scan_string(scan):
+        start_ln, start_col = scan.ln, scan.col 
+        
+        quote = scan.peek()
+        scan.advance()
+        
+        value = ""
+        
+        while scan.peek() and not scan.peek() == quote:
+            curr_char = scan.peek()
+            value += curr_char
+            scan.advance()
+            
+        scan.advance()
+        
+        return Token("STRING", value, start_ln, start_col, scan.ln, scan.col)
 
     
+    def scan_commentary(scan):
+        scan.advance() # get .
+        scan.advance() # get .
+        
+        while not scan.peek() == "\n":
+            scan.advance()
+         
+                     
+    def scan_symbol(scan):
+        start_ln, start_col = scan.ln, scan.col
+        value = scan.peek()
+        
+        return Token("SYMBOL", value, start_ln, start_col, scan.ln, scan.col)
+    
+    
+    
+    
+    while scan.peek() is not None:
+        
+        char = scan.peek()
+        
+        if char.isspace():
+            scan.advance()
+            continue
+        
+        if char.isalpha() or char == '_':
+            tokens.append(scan_identifier(scan))  
+            continue
+            
+        if char.isdigit():
+            tokens.append(scan_number(scan))
+            continue    
+        
+        if char in SYMBOLS:
+            tokens.append(scan_symbol(scan))
+            scan.advance()
+            continue
+        
+        if char in ("'", '"'):
+            tokens.append(scan_string(scan))
+            continue
+        
+        if char == "." and scan.next() == ".":
+            scan_commentary(scan)
+            continue
+        
+        raise HovaSyntaxError(
+            f'Unexpected character {char}',
+            scan.ln,
+            scan.col
+        )          
+    
+    return tokens

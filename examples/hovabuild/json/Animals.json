@@ -1,0 +1,14 @@
+{
+    "Animals": {
+        "atomic": {
+            "emit": "json",
+            "creator": "PetShopOwner"
+        },
+        "Dog": {
+            "name": "Bob"
+        },
+        "Cat": {
+            "name": "Star"
+        }
+    }
+}

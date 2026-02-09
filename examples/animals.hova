@@ -1,0 +1,19 @@
+anvil Animals
+
+  atomic 
+    atom emit : "json"
+    atom visual : "minimal"
+    atom hideConfig : "on"
+
+    atom creator : "PetShopOwner"
+  end
+
+  ore Dog
+    spark name : "Bob"
+  end
+
+  ore Cat
+    spark name : "Star"
+  end
+  
+end

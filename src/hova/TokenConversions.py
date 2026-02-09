@@ -1,107 +1,140 @@
 from .Tokenizer import Token
 
-def Literal(type, value, line:int=None, col:int=None) -> dict:
+def Literal(type, value, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": type,
         "value": value,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
     
-def Identifier(name, line:int=None, col:int=None) -> dict:
+def Identifier(name, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "Identifier",
         "name": name,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
     
-def Spark(name, type, value, line:int=None, col:int=None) -> dict:
+def Spark(name, type, value, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "Spark",
         "valType": type,
         "name": name,
         "value": value,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
     
-def Atom(name, value, line:int=None, col:int=None) -> dict:
+def Atom(name, value, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "Atom",
         "name": name,
         "value": value,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
 
     
-def Seal(name, args=None, line:int=None, col:int=None) -> dict:
+def Seal(name, args=None, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "Seal",
         "name": name,
         "args": args,
-        "line": line,
-        "col": col,
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
     
 
 # EncompassConverters
      
-def AnvilEncompass(name, atomic, children, line:int=None, col:int=None) -> dict:
+def AnvilEncompass(name, atomic, children, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "AnvilEncompass",
         "name": name,
         "atomic": atomic,
         "children": children,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
 
-def OreEncompass(seals, name, sparks, child_ores, line:int=None, col:int=None) -> dict:
+def OreEncompass(seals, name, sparks, child_ores, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "OreEncompass",
         "name": name,
         "seals": seals,
         "sparks": sparks,
         "child_ores": child_ores,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
 
-def AtomicEncompass(atoms, line:int=None, col:int=None) -> dict:
+def AtomicEncompass(atoms, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "AtomicEncompass",
         "atoms": atoms,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
 
-def CallFunction(callee, param=None, args=[], line:int=None, col:int=None) -> dict:
+def CallFunction(callee, param=None, args=[], start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "CallFunction",
         "callee": callee,
         "param": param,
         "args": args,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
     
-def NamespaceEmitter(props, val, line:int=None, col:int=None) -> dict:
+def NamespaceEmitter(props, val, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "NamespaceEmit",
         "props": props,
         "val": val,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }
 
     
-def CaveEncompass(name:Token, children, line:int=None, col:int=None) -> dict:
+def CaveEncompass(name:Token, children, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "CaveEncompass",
         "name": name,
         "ores": children,
-        "line": line,
-        "col": col
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
+    }
+    
+    
+def Dimension(path, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
+    return {
+        "type": "Dimension",
+        "path": path,
+        "start_ln": start_ln,
+        "start_col": start_col,
+        "end_ln": end_ln,
+        "end_col": end_col
     }

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hova"
-version = "1.95"
+version = "2.00"
 description = "Hova Language Core"
 authors = [
   { name="Xavier" }
