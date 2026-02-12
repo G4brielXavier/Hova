@@ -14,6 +14,7 @@ from .Tokenizer import Tokenizer
 from .Parser import Parser
 from .Emitter import Emitter
 from .Interpreter import FunctionInterpreter
+from .Writter import Writter
 
 # Imports to conversions
 from pathlib import Path
@@ -23,8 +24,6 @@ import toml
 
 # Path controls
 import os
-import pathlib
-import shutil 
 import re
 
 # Hova errors imports
@@ -36,6 +35,9 @@ from .ErrorsTreatments import (
 
 DEV_TEST = [False, ""]
 
+logmain = Writter()
+logrun = Writter()
+logdimen = Writter()
 
 # NOTE: Hova 1.0 - 1.7 -> 2025 December, 3 - 31
 # NOTE: Hova 1.8 -> 2026 January, 3 
@@ -44,26 +46,35 @@ DEV_TEST = [False, ""]
 # NOTE: Hova 2.00 -> 2026 February, 07
 
 
-def Conversior(root_type, root_name, anvilStruct, file_path):
+def Converter(root_type, root_name, anvilStruct, file_path, silent=False):
     with file_path.open("w", encoding="utf-8") as file:
 
         if root_type == "json": json.dump(anvilStruct, file, indent=4, ensure_ascii=False) 
         if root_type == "yaml": dump(anvilStruct, file, allow_unicode=True, sort_keys=False)
         if root_type == "toml": toml.dump(anvilStruct, file)
+        
+        if not silent:
+            logmain.SayMain(f'[Hova Converter] "{str(root_name).split('.')[0]}" was created as {str(root_type).upper()}!')
+            print()
 
-        print(f'[Hova Emitter] "{str(root_name).split('.')[0]}" was created as {str(root_type).upper()}!')
+def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInfo=False, silent=False):
+    
+    if not giveForgeInfo:
+        logrun.silent = silent
+    else:
+        logrun.silent = True
 
-
-def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInfo=False):
+    logrun.SayMain("[Hova Forge] Forge Initiated!")
+    print()
     
     tokens = Tokenizer(input)
-
 
 
     # If input is empty
     
     if len(tokens) == 0:
-        raise HovaEmissionError('Hova File is empty', 0, 0)
+        logrun.SayError("Hova file is empty")
+        return
     
     
             
@@ -72,12 +83,12 @@ def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInf
     justKeyword = [token.value if token.type == "KEYWORD" else 0 for token in tokens]
     
     if justKeyword.count("anvil") > 1:
-        raise HovaEmissionError("Hova file must have only one 'AnvilEncompass'", 0, 0)
+        logmain.SayError("Hova file must have only one 'AnvilEncompass'")
+        return
     
     if justKeyword.count("atomic") > 1:
-        raise HovaEmissionError("Hova file must have only one 'AtomicEncompass'", 0, 0)
-    
-    
+        logmain.SayError("Hova file must have only one 'AtomicEncompass'")
+        return
     
     # Main Process
     
@@ -147,6 +158,9 @@ def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInf
         out_dir_hova.mkdir(exist_ok=True)
 
         root_name = next(iter(anvilStruct)) # Filename
+        
+        logrun.SayLog(f'Forging "{root_name}"...')
+        
         emitData = list(anvilStruct.values())[0]
         
         atomicKeys = [k for k in emitData['atomic']]
@@ -156,6 +170,7 @@ def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInf
         # Get the Emit file type from Atomic or 'force_emit' param.
 
         root_type = emitData["atomic"]["emit"] if not force_emit else force_emit
+
 
         if giveForgeInfo:
             return {
@@ -173,7 +188,8 @@ def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInf
             
 
         if not str(root_type).lower() in ("json", "yaml", "toml"):
-            raise HovaEmissionError("Expected the correct EmitteDestiny. Use 'json', 'yaml', 'toml'", 0, 0)
+            logrun.SayError("Expected the correct file type to emite. Use 'json', 'yaml', or 'toml'")
+            return
 
 
 
@@ -202,15 +218,20 @@ def Forge(input, output_dir=None, force_emit=None, returnAST=False, giveForgeInf
 
 
         # Get the all data and 'dump' to converts for the file type setted
-        Conversior(
+        Converter(
             root_type=root_type,
             root_name=root_name,
             anvilStruct=anvilStruct,
-            file_path=file_path
+            file_path=file_path, 
         )
-            
-     
-def Dimen(input):
+                
+def Dimen(input, silent=False):
+    
+
+    logdimen.silent = silent
+    
+    logdimen.SayMain("[Hova Dimen] Entering the Dimension!")
+    print()
     
     ast = Forge(input=input, returnAST=True)
     
@@ -222,70 +243,70 @@ def Dimen(input):
         # - Verify if exists with os.path.exists
         # - Open the directory and "Forge"
         # - Forge each .hova file
-        
-    structured_dimension = {}
-
-    structure = """
-    It will be converted by the converters
     
-    {
-        "foldername" : {
-            "hovafilename": "ast_to_convert"
-        }   
-    }
-    """
+    dimensions = []
     
     for node in ast:
         
         if not os.path.exists(node['path']):
-            print(f'[Hova Dimen] "{node['path']}" not exist as directory')
+            logdimen.SayError(f'[Hova Dimen] "{node['path']}" not exist as directory')
             return
         
-        path = Path(node['path'])
-        structured_dimension[node['path']] = []
+        dimensions.append(node['path'])
+        
+    for foldername in dimensions:
+        path = Path(foldername)
+        files = []
         
         for file_path in path.iterdir():
             if file_path.is_file():
                 try:
                     
                     with open(file_path, 'r', encoding="utf-8") as file:
-                        content = file.read()
-                        structured_dimension[node['path']].append({ "filename": file_path, "content": content })
+                        files.append({ "filename": file_path, "content": file.read() })
                     
                 except IOError as err:
-                    print(f'[Hova Dimen] Error reading "{file_path}": {err}')
+                    logdimen.SayError(f'[Hova Dimen] Error reading "{file_path}": {err}')
                     
-                
-        for foldername, files in structured_dimension.items():
             
-            out_dir_hova = Path('hovabuild')
-            out_dir_hova.mkdir(exist_ok=True)
+        logdimen.SayLog(f'[Hova Dimen] Extrating "{foldername}" dimension...')
             
-            main_folder = out_dir_hova / Path(foldername)
-            main_folder.mkdir(exist_ok=True)
+        out_dir_hova = Path('hovabuild')
+        out_dir_hova.mkdir(exist_ok=True)
+        
+        main_folder = out_dir_hova / Path(foldername)
+        main_folder.mkdir(exist_ok=True)
+        
+        
+        for file in files:
+            logdimen.SayLog("[Hova Dimen > Forge] Waiting the forge finish...")
             
-            for file in files:
-                filepath = out_dir_hova / file['filename']
-                filecontent = file['content']
-                
-                
-                struct_info_forge = Forge(
-                    input=filecontent,
-                    output_dir=None,
-                    force_emit=None,
-                    giveForgeInfo=True
-                )
-                
-                new_filepath_regex =  re.sub(r"\bhova\b", struct_info_forge["root_type"], str(filepath))
-                new_filepath = Path(new_filepath_regex)
-                
-                Conversior(
-                    root_type=struct_info_forge['root_type'],
-                    root_name=struct_info_forge['root_name'],
-                    anvilStruct=struct_info_forge['anvilStruct'],
-                    file_path=new_filepath
-                )
-
-                
-                
+            filepath = out_dir_hova / file['filename']
+            filecontent = file['content']
+            
+            info = Forge(
+                input=filecontent,
+                output_dir=None,
+                force_emit=None,
+                giveForgeInfo=True
+            )
+            
+            if not info:
+                logdimen.SayError("[Hova Dimen Alert] Ocurred an error in the process.")
+                return
+            
+            new_filepath_regex =  re.sub(r"\bhova\b", info["root_type"], str(filepath))
+            new_filepath = Path(new_filepath_regex)
+            
+            Converter(
+                root_type=info['root_type'],
+                root_name=info['root_name'],
+                anvilStruct=info['anvilStruct'],
+                file_path=new_filepath
+            )
+            
+        logdimen.SayMain(f'[Hova Dimen] Dimension "{foldername}" Successfully issued!')
+        print()
+        
+       
     return

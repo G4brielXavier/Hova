@@ -26,3 +26,7 @@ hova.exe
 /cli/__pycache__
 
 dimension_idea.txt
+
+*.egg-info/
+
+src/hova.egg-info/

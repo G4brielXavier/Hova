@@ -24,18 +24,18 @@ The validation and final interpretation **not is responsibility of Hova**, but f
 
 ---
 
-## Filosofia dos exemplos
+## Filosophy of Examples
 
-Os exemplos aqui:
-- não representam uma engine específica
-- não impõem regras de execução
-- focam apenas em **descrição de mundo**
+The examples here:
+- Not represents a specific engine
+- Not impose implementation rules
+- Focuses only on **world description**
 
-Hova é uma DSL **descritiva**, não imperativa.
-Ela define *o que existe*, não *como rodar*.
+Hova is a descritive DSL, not imperative.
+It defines *what exists*, not *how works*.
 
 ---
 
-Se algo parecer simples demais, é intencional. <br>
-Os exemplos existem para ensinar a linguagem, não para exibir complexidade.<br>
-Se houver complexidade, é apenas para mostrar que a linguagem suporta.<br>
+If something look so simple, is intentional. <br>
+The examples exists to teech the language, not to display complexity. <br>
+If there is complexity, is only to show that the language suport. <br>

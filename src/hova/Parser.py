@@ -448,21 +448,10 @@ def Parser(tokens):
             canEmpty=True, 
             uniqueChild=True
         )
+
         
         # Verify if its an error
         if IsError(children): raise children
-        
-        # Sparks = []
-        # Seals = []
-
-        # If its block, get seals and sparks separatelly 
-            
-        # for child in children:
-            
-        #     if child['type'] == 'Seal':
-        #         Seals.append(child)
-        #     else:
-        #         Sparks.append(child)
                     
         context_stack.pop()
         return OreEncompass(
@@ -511,6 +500,8 @@ def Parser(tokens):
             raise HovaSyntaxError(f'Expected a correct value to Spark Definer', tok.start_ln, tok.start_col)
         
         SparkValue = Parse_Primary()
+        # print(SparkValue)
+        
         
         if IsError(SparkValue): raise SparkValue
         
@@ -655,10 +646,15 @@ def Parser(tokens):
             return None
         
         token = ConsumeToken()
+
+        if token.value == "":
+            return Literal("StringLiteral", "")
         
         if token.value in ('end'): return None
             
-        if token.type == "STRING": return Literal("StringLiteral", token.value)   
+        if token.type == "STRING":
+            return Literal("StringLiteral", token.value)   
+        
         if token.type == "NUMBER_INTEGER": return Literal("IntegerLiteral", token.value)
         if token.type == "NUMBER_FLOATING": return Literal("FloatingLiteral", token.value)
         
@@ -674,6 +670,7 @@ def Parser(tokens):
                 return Literal("ArrayLiteral", Items)   
                     
             if token.value == "!": return Parse_Sufx()
+
                     
         if token.type == "KEYWORD": 
             keyword = token.value.lower()

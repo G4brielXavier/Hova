@@ -149,38 +149,17 @@ def Emitter(node, canUpdate:bool=False):
     
     if node["type"] == "OreEncompass":
 
-        MessageImportant_Seal = []
-        
-        Seals = node["seals"]
         SparksList = node['sparks']
         OresList = node["child_ores"]
-
-        # SETUP ANNOTATIONS        
-        if not Seals == []:
-            for seal in Seals:
-                if seal["name"] == 'reject': MessageImportant_Seal.append({"message": 'IGNORE_IT', "args": []})
-                if seal["name"] == "mark": MessageImportant_Seal.append({"message": 'MARK_IT', "args": seal["args"]})
-            
+           
         SparksDict = {}
         OresDict = {}
         
         StructOreEncompass = {}
         
-        # ADDING ANNOTATIONS EMITTED
-        if not MessageImportant_Seal == []:
-            for seal_msg in MessageImportant_Seal:
-                if seal_msg["message"] == "MARK_IT":
-                    MarksToAdd = []
-                    
-                    for mark in seal_msg['args']:
-                        MarksToAdd.append(mark["value"])
-                    
-                    StructOreEncompass["marks"] = MarksToAdd
-                    
-                if seal_msg["message"] == "IGNORE_IT":
-                    StructOreEncompass["ignored"] = seal_msg["args"]
         
-        # ADDING SPARKS EMITTED
+        # Adding emitted sparks
+        
         for spark in SparksList:
             emitedSpark = Emitter(spark)
             SparksDict[spark["name"]] = emitedSpark
@@ -189,7 +168,8 @@ def Emitter(node, canUpdate:bool=False):
             emitedOre = Emitter(ore)
             OresDict[ore['name']] = emitedOre
         
-        if EmitterConfig['visual'] == 'minimal':
+        
+        if EmitterConfig['visual'] == 'minimal':            
             for name, value in SparksDict.items():
                 StructOreEncompass[name] = value
                 
@@ -197,8 +177,14 @@ def Emitter(node, canUpdate:bool=False):
                 StructOreEncompass[name] = value
         else:
             StructOreEncompass["sparks"] = SparksDict
-            StructOreEncompass["embedOres"] = OresDict
-    
+            StructOreEncompass["ores"] = OresDict
+            
+            
+        # If is empty
+        for oreName, oreSteps in StructOreEncompass.items():
+            if isinstance(oreSteps, list):
+                StructOreEncompass[oreName] = {}
+
         return StructOreEncompass
     
     if node["type"] == "AtomicEncompass":

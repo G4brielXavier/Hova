@@ -31,7 +31,7 @@ It is used to define:
 Hova files are written by humans. <br>
 They are compiled into **JSON, YAML or TOML** for machines.
 
-👉 More info & docs: [https://hova.space](https://hova.space)
+👉 More info & docs: [Hova Documentation](https://hovaforge.vercel.app)
 
 ---
 
@@ -287,6 +287,23 @@ Download installer from **Releases**.
 
 ---
 
+### 📖 Install in documentation
+
+1. Click on *Install Hova vX.XX* button in navbar.
+2. After, open the installer and install bin.
+
+*Don't forget to check **ADD PATH**.*
+
+### 👁️‍🗨️ Test
+
+Verify if it works using this commands:
+```ps
+> hova --version
+Hova vX.Xx
+> hova -v
+Hova vX.Xx
+```
+
 ## 🚀 Learn Hova in 3 Steps
 
 1️⃣ Create `shapes.hova`
@@ -401,14 +418,3 @@ It’s:
 * a **bridge between creativity and machines**
 * something game dev tools don’t have yet
 
-
-## ❤️ Support
-
-Hova is indie.
-
-If this helped your game, mod or universe, support development 🙌
-
-🇧🇷 Pix
-📧 [nopaxxff@gmail.com](mailto:nopaxxff@gmail.com)
-
-Foreigners can donate via Wise using this Pix.

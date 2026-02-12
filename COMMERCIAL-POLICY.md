@@ -1,65 +1,58 @@
-# Hova – Política de Uso Comercial
+# Hova – Commercial Use Policy
 
-Hova é gratuito para:
-- uso pessoal
-- aprendizado
-- pesquisa
-- projetos open-source
-- indies não comerciais
-- hobby
-
-Se encaixou nisso → pode usar sem pagar e sem medo 🎉
-
----
-
-## 💼 Uso Comercial (precisa de licença)
-Empresas e organizações precisam adquirir licença comercial quando:
-
-- usam Hova em produtos pagos
-- usam em pipelines internos corporativos
-- usam em SaaS / plataformas / serviços
-- usam em soluções vendidas a clientes
-- dependem de Hova para gerar lucro direta ou indiretamente
-- integram Hova em software proprietário
-
-Não importa se o código da empresa é fechado ou aberto.
-Se há finalidade comercial, licença é obrigatória.
+Hova is free for:
+- personal use
+- learning
+- research
+- open-source projects
+- non-commercial indies
+- hobbies
+If you fit into one of these categories → you can use it without paying and without fear 🎉
 
 ---
+## 💼 Commercial Use (license required)
 
-## ❌ Não permitido sem licença
-- “Usar de boa” escondido em empresa
-- Integrar em serviço comercial sem autorização
-- Redistribuir builds como se fossem oficiais
-- Vender ferramentas baseadas em Hova sem acordo
-
-Empresas sérias respeitam licença.
-E essa política existe pra proteger o projeto e permitir evolução.
-
----
-
-## 👌 Não precisa pagar se:
-- você é estudante
-- pesquisa acadêmica
-- projeto pessoal
-- criador indie sem monetização
-- open source não comercial
+Companies and organizations need to purchase a commercial license when:
+- they use Hova in paid products
+- they use it in internal corporate pipelines
+- they use it in SaaS / platforms / services
+- they use it in solutions sold to customers
+- they depend on Hova to generate profit directly or indirectly
+- they integrate Hova into proprietary software
+It doesn't matter if the company's code is closed or open.
+If there is a commercial purpose, a license is mandatory.
 
 ---
-
-## 🎯 Objetivo
-A licença comercial:
-- ajuda a manter o projeto vivo
-- financia evolução técnica
-- garante futuro
-- cria profissionalismo
-- dá segurança jurídica pras empresas
-
----
-
-## 📬 Interesse em licença?
-Entre em contato no repositório oficial ou pelo email **dotxavket@gmail.com**.
-Planos comerciais serão tratados diretamente de forma simples e justa.
+## ❌ Not allowed without a license
+- “Goodwill use” hidden within a company
+- Integrating into a commercial service without authorization
+- Redistributing builds as if they were official
+- Selling Hova-based tools without an agreement
+Reputable companies respect the license.
+This policy exists to protect the project and allow for its evolution.
 
 ---
-Esta política pode ser ajustada conforme o projeto evolui.
+## 👌 You don't have to pay if:
+- you are a student
+- academic research
+- personal project
+- indie creator without monetization
+- non-commercial open source
+
+---
+## 🎯 Objective
+The commercial license:
+- helps keep the project alive
+- finances technical evolution
+- guarantees the future
+- creates professionalism
+- provides legal security for companies
+
+---
+## 📬 Interested in a license?
+Contact us at the official repository or by email at **hovalicense@gmail.com**.
+Commercial plans will be handled directly in a simple and trust.
+
+---
+This policy can be adjusted follow the project grow.
+

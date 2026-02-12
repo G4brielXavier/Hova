@@ -1,3 +1,4 @@
 /hovabuild
 /dist
-/hova/hova.egg-info
+
+hova.egg-info/
