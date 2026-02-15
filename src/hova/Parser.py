@@ -661,7 +661,6 @@ def Parser(tokens):
         if token.type == "SYMBOL":
             
             if token.value == "[": 
-                
                 Items = []
                 Items = Parse_Array(until=']')
                 

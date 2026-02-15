@@ -1,0 +1,29 @@
+anvil MyProjects
+
+    atomic 
+        atom emit : "json"
+        atom visual : "minimal"
+        atom hideAtomic : "on"
+    end
+
+    cave Projects 
+
+        ore GabrielXavier 
+
+            spark whatdo list : ["FullStack Developer", "Language Engineer"]
+            
+            ore Tags   
+                spark React : "https://react.dev"
+            end
+
+            ore Externals
+                spark Github : "https://github.com/G4brielXavier"
+                spark LinkedIn : "https://www.linkedin.com/in/gabriel-xavier-5b64153b0/"
+            end
+
+        end
+
+    end
+
+
+end

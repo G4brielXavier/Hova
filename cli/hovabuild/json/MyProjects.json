@@ -1,0 +1,19 @@
+{
+    "MyProjects": {
+        "Projects": {
+            "GabrielXavier": {
+                "whatdo": [
+                    "FullStack Developer",
+                    "Language Engineer"
+                ],
+                "Tags": {
+                    "React": "https://react.dev"
+                },
+                "Externals": {
+                    "Github": "https://github.com/G4brielXavier",
+                    "LinkedIn": "https://www.linkedin.com/in/gabriel-xavier-5b64153b0/"
+                }
+            }
+        }
+    }
+}

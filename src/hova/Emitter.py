@@ -179,11 +179,11 @@ def Emitter(node, canUpdate:bool=False):
             StructOreEncompass["sparks"] = SparksDict
             StructOreEncompass["ores"] = OresDict
             
-            
         # If is empty
         for oreName, oreSteps in StructOreEncompass.items():
             if isinstance(oreSteps, list):
-                StructOreEncompass[oreName] = {}
+                if len(oreSteps) == 0: 
+                    StructOreEncompass[oreName] = {}
 
         return StructOreEncompass
     
