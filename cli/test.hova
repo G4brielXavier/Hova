@@ -12,8 +12,10 @@ anvil MyProjects
 
             spark whatdo list : ["FullStack Developer", "Language Engineer"]
             
-            ore Tags   
-                spark React : "https://react.dev"
+            ore Tags
+                ore React
+                    spark link : "https://react.dev"
+                end
             end
 
             ore Externals
@@ -27,3 +29,9 @@ anvil MyProjects
 
 
 end
+
+
+
+
+
+- Bug in Lists
