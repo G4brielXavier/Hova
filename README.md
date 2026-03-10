@@ -15,6 +15,11 @@ Stop describing **game worlds, entities and rules** using formats made for machi
 **Hova is a human-friendly DSL made for world-building**, entity definition, modding ecosystems, NPC sets, configuration-heavy systems and narrative universes.
 Write structured worlds once → export instantly to **JSON, YAML or TOML**.
 
+
+**Hova Plugin Extension is available:** 
+- ID: *GabrielXavier.hova-plugin* (Copy and Paste to search) 
+- Marketplace: https://marketplace.visualstudio.com/items?itemName=GabrielXavier.hova-plugin
+
 ---
 
 ## 🎮 What is Hova?
@@ -263,13 +268,13 @@ Your engine executes meaning.
 
 
 
+
+
 ## 🗺️ Hova Roadmap
 
 Soon (not guaranteed but dreamed):
 
 * Markdown + `.ini` export
-* Hova IDE
-* VSCode plugin
 * Better tooling
 * Game engine adapters
 
@@ -358,39 +363,6 @@ hovabuild/
   yaml/
   toml/
 ```
-
----
-
-## 📜 License
-
-Hova is dual-licensed. <br>
-
-If you are a company or plan to monetize a product using Hova, you **must use the Commercial License**.
-
-#### **Community License**
-Free for:
-
-* individuals
-* students
-* hobby & open-source
-* research
-* non-profit
-
-#### **Commercial License** 
-Required for:
-* companies
-* studios
-* SaaS
-* commercial production use
-
-See:
-
-* LICENSE-AGPL
-* LICENSE-Community.md
-* LICENSE-Commercial.md
-
-Commercial contact:
-📧 [hovalicense@gmail.com](mailto:hovalicense@gmail.com)
 
 ---
 
