@@ -43,7 +43,8 @@ logdimen = Writter()
 # NOTE: Hova 1.8 -> 2026 January, 3 
 # NOTE: Hova 1.9 -> 2026 January, 15 - "Hova is not big because has many features. It is big because not try be what not it is."
 # NOTE: Hova 1.95 -> 2026 January, 19
-# NOTE: Hova 2.00 -> 2026 February, 07
+# NOTE: Hova 2.05 -> 2026 February, 07
+# NOTE: Hova 3.0 -> 2026
 
 
 def Converter(root_type, root_name, anvilStruct, file_path, silent=False):

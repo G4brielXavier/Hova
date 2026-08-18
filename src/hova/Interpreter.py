@@ -65,7 +65,14 @@ def FunctionInterpreter(node):
                     "sparks": oreSparks
                 }
 
-                NewOres.append(NewEmbed)                 
+                NewOres.append(NewEmbed) 
+                
+                
+        if node['abstract'] is not None:
+            ...
+            
+        if node['mimic_from'] is not None:
+            ...                
                 
         node["sparks"] = NewSparks
         node['child_ores'] = NewOres

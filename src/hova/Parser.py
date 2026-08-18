@@ -441,6 +441,28 @@ def Parser(tokens):
             if Next() is None:
                 raise HovaSyntaxError("Expected 'end' after 'OreName' identifier", tok.start_ln, tok.start_col)
         
+        
+        abstract = None
+        is_mimic = None
+        
+        if ViewNext().value == "abstract":
+            abstract_tok = Expect(value="abstract")
+            if IsError(abstract_tok): raise abstract_tok
+            
+            abstract = abstract_tok.value
+        
+        if ViewNext().value == "mimic":
+            mimic_tok = Expect(value="mimic")
+            if IsError(mimic_tok): raise mimic_tok
+            
+            is_mimic_tok = Expect(type="IDENTIFIER")
+            if IsError(is_mimic): raise is_mimic
+            
+            is_mimic = is_mimic_tok.value
+            
+        
+
+        
         children = Parse_Block(
             until='end', 
             encompassName='OreEncompass', 
@@ -459,6 +481,8 @@ def Parser(tokens):
             name=EntityName, 
             sparks=children['sparks'] if len(children['sparks']) > 0 else [],
             child_ores=children['ores'] if len(children['ores']) > 0 else [],
+            abstract=abstract,
+            mimic_from=is_mimic,
             start_ln=tokens[pos].start_ln,
             start_col=tokens[pos].start_col
         )   

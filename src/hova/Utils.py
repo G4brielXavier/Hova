@@ -1,5 +1,5 @@
 
-KEYWORDS = ["anvil", "ore", "atomic", "cave", "spark", "atom", "end", "true", "false", "dimension"]
+KEYWORDS = ["anvil", "ore", "atomic", "cave", "spark", "atom", "end", "true", "false", "dimension", "abstract", "mimic"]
 TYPES = ["int", "float", "str", "bool", "list", "sufx"]
 SYMBOLS = set("!()[],:")
 SUFIXES = ['k', 'm', 'b', 't']

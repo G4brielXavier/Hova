@@ -1,0 +1,16 @@
+anvil TestingAbstract
+    
+    atomic
+        atom creator : "Creator"
+        atom emit : "json"
+        atom visual : "minimal"
+    end
+    
+    ore father abstract
+        spark color : "blue"
+    end
+
+    ore child mimic father
+    end
+    
+end

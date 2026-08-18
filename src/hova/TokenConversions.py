@@ -70,9 +70,11 @@ def AnvilEncompass(name, atomic, children, start_ln:int=None, start_col:int=None
         "end_col": end_col
     }
 
-def OreEncompass(seals, name, sparks, child_ores, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
+def OreEncompass(seals, name, sparks, child_ores, abstract, mimic_from, start_ln:int=None, start_col:int=None, end_ln:int=None, end_col:int=None) -> dict:
     return {
         "type": "OreEncompass",
+        "abstract": abstract,
+        "mimic_from": mimic_from,
         "name": name,
         "seals": seals,
         "sparks": sparks,

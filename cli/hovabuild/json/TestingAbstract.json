@@ -1,0 +1,15 @@
+{
+    "TestingAbstract": {
+        "atomic": {
+            "config": {
+                "visual": "minimal"
+            },
+            "creator": "Creator",
+            "emit": "json"
+        },
+        "father": {
+            "color": "blue"
+        },
+        "child": {}
+    }
+}

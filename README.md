@@ -10,6 +10,8 @@
 
 ![HOVA](./assets/HOVA.png)
 
+> This project is deprecated since 2025
+
 Stop describing **game worlds, entities and rules** using formats made for machines.
 
 **Hova is a human-friendly DSL made for world-building**, entity definition, modding ecosystems, NPC sets, configuration-heavy systems and narrative universes.
